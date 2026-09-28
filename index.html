@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BAMBA-ORIENTATION — Étudier à l'étranger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545; --navy-deep:#071A33; --red:#E8611C; --gold:#D4A017;
+    --cream:#F7F4EE; --ink:#1A1A1A; --paper:#FFFFFF; --line:#E4DFD3;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:calc(env(safe-area-inset-bottom,0px) + 64px);
+  }
+  html{scroll-padding-top:60px; height:100%;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --cream:#12161C; --paper:#181D25; --ink:#EDEAE2; --line:#2A313C; }
+  }
+  :root[data-theme="dark"]{ --cream:#12161C; --paper:#181D25; --ink:#EDEAE2; --line:#2A313C; }
+  *{margin:0; padding:0; box-sizing:border-box;}
+  body{background:var(--cream); color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.55;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; font-weight:700; line-height:1.15; color:var(--navy);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2,:root:not([data-theme="light"]) h3{color:#E9C77A;} }
+  :root[data-theme="dark"] h1,:root[data-theme="dark"] h2,:root[data-theme="dark"] h3{color:#E9C77A;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px;}
+
+  /* header stack */
+  .topbar{background:var(--navy-deep); color:#fff; font-size:.8rem; text-align:center; padding:7px 12px;}
+  header.mainbar{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:1px solid var(--line); padding:12px 0;}
+  header.mainbar .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{font-family:'Fraunces',serif; font-weight:700; font-size:1.2rem; color:var(--navy);}
+  .brand span{color:var(--red);}
+  .flagbadge{display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:20px; padding:6px 12px; font-size:.85rem; font-weight:600;}
+
+  .searchbar-wrap{background:var(--paper); padding:0 0 14px;}
+  .searchbar{
+    display:flex; align-items:center; gap:10px; background:var(--cream); border:1.5px solid var(--line);
+    border-radius:26px; padding:12px 18px; font-size:.95rem; font-weight:600; color:var(--navy);
+  }
+
+  /* hero banner */
+  .hero{
+    position:relative; overflow:hidden; margin:0 20px 28px; border-radius:14px;
+    background:linear-gradient(115deg, var(--navy) 0 55%, var(--red) 55% 100%);
+    padding:34px 22px 30px; color:#fff;
+  }
+  .hero .dots{position:absolute; top:14px; left:16px; width:60px; height:36px;
+    background-image:radial-gradient(circle,var(--gold) 1.6px,transparent 1.7px); background-size:8px 8px; opacity:.9;}
+  .hero .tri{position:absolute; right:0; top:0; width:0; height:0; border-style:solid;
+    border-width:0 90px 90px 0; border-color:transparent var(--gold) transparent transparent; opacity:.85;}
+  .hero-inner{position:relative; z-index:2;}
+  .hero h1{color:#fff; font-size:1.85rem; max-width:15ch;}
+  .hero p{margin-top:10px; max-width:32ch; font-size:.98rem; opacity:.95;}
+  .hero .btn{margin-top:20px;}
+  .icon-collage{display:flex; gap:10px; margin-top:22px; flex-wrap:wrap;}
+  .icon-pod{background:rgba(255,255,255,.16); border-radius:10px; width:52px; height:52px;
+    display:flex; align-items:center; justify-content:center; font-size:1.5rem;}
+
+  .btn{display:inline-block; padding:13px 22px; border-radius:24px; font-weight:700; font-size:.92rem;}
+  .btn-primary{background:var(--gold); color:var(--navy-deep);}
+  .btn-outline{border:1.5px solid #fff; color:#fff;}
+
+  /* category icon row */
+  .cats{display:flex; gap:18px; overflow-x:auto; padding:4px 20px 24px; scrollbar-width:none;}
+  .cats::-webkit-scrollbar{display:none;}
+  .cat{flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:8px; width:76px; text-align:center;}
+  .cat .ico{width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;}
+  .cat span{font-size:.74rem; font-weight:600; color:var(--ink); line-height:1.2;}
+  .c1{background:#2C6E8E;} .c2{background:var(--red);} .c3{background:#3E7D4E;}
+  .c4{background:var(--gold);} .c5{background:#6E4E9E;} .c6{background:var(--navy);}
+
+  section{padding:36px 20px; border-top:1px solid var(--line);}
+  .eyebrow{color:var(--red); font-weight:700; font-size:.78rem; letter-spacing:.2px; margin-bottom:8px;}
+  section h2{font-size:1.45rem; margin-bottom:22px; max-width:22ch;}
+
+  .why-cards{display:grid; grid-template-columns:1fr; gap:14px;}
+  @media(min-width:600px){ .why-cards{grid-template-columns:1fr 1fr 1fr;} }
+  .why-card{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .why-card .tag{display:inline-block; font-size:.7rem; font-weight:700; color:var(--red); letter-spacing:.3px; margin-bottom:8px;}
+  .why-card h3{font-size:1rem; font-family:'Inter'; font-weight:700; color:var(--ink); margin-bottom:6px;}
+  .why-card p{font-size:.88rem; opacity:.8;}
+
+  .steps{list-style:none; counter-reset:step; max-width:640px;}
+  .steps li{counter-increment:step; position:relative; padding:13px 0 13px 44px; border-top:1px solid var(--line);}
+  .steps li:first-child{border-top:none;}
+  .steps li::before{content:counter(step); position:absolute; left:0; top:13px; width:26px; height:26px;
+    border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:.75rem; font-weight:700;}
+  .steps li strong{display:block;} .steps li span{font-size:.9rem; opacity:.8;}
+
+  .about p{max-width:60ch;}
+  .badge{display:inline-block; margin-top:16px; font-size:.85rem; font-weight:700; color:var(--navy); border:1px solid var(--line); padding:8px 14px; border-radius:20px;}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .badge{color:#E9C77A;} }
+  :root[data-theme="dark"] .badge{color:#E9C77A;}
+
+  details{border-top:1px solid var(--line); padding:14px 0;}
+  details:first-of-type{border-top:none;}
+  summary{font-weight:700; cursor:pointer;}
+  details p{margin-top:8px; font-size:.9rem; opacity:.85; max-width:56ch;}
+
+  .contact-grid{display:grid; gap:14px;}
+  @media(min-width:600px){ .contact-grid{grid-template-columns:1fr 1fr;} }
+  .contact-card{background:var(--paper); border:1px solid var(--line); padding:18px; border-radius:12px;}
+  .contact-card h3{font-size:.9rem; font-family:'Inter'; font-weight:700; margin-bottom:8px;}
+  .contact-card a{color:var(--red); font-weight:700;}
+
+  footer{padding:26px 20px; text-align:center; font-size:.82rem; opacity:.65;}
+
+  .botnav{
+    position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--paper);
+    border-top:1px solid var(--line); display:flex; justify-content:space-around;
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .botnav a{display:flex; flex-direction:column; align-items:center; gap:3px; font-size:.68rem; font-weight:600; color:var(--ink); opacity:.7;}
+  .botnav a.active{color:var(--red); opacity:1;}
+  .botnav .bi{font-size:1.15rem;}
+
+  /* gate / identification screen */
+  .gate-overlay{
+    position:fixed; inset:0; z-index:100; background:var(--navy-deep);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    padding-top:calc(20px + env(safe-area-inset-top,0px));
+    padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));
+    overflow-y:auto;
+  }
+  .gate-card{background:var(--paper); border-radius:14px; padding:26px 22px; max-width:380px; width:100%;}
+  .gate-brand{font-family:'Fraunces',serif; font-weight:700; font-size:1.1rem; color:var(--navy); margin-bottom:10px;}
+  .gate-brand span{color:var(--red);}
+  .gate-card h2{font-size:1.15rem; margin-bottom:18px; max-width:none;}
+  .gate-card label{display:block; font-size:.85rem; font-weight:600; margin-bottom:14px; color:var(--ink);}
+  .gate-card input[type="text"], .gate-card input[type="email"], .gate-card input[type="number"], .gate-card select{
+    display:block; width:100%; margin-top:6px; padding:11px 12px; border-radius:8px;
+    border:1.5px solid var(--line); background:var(--cream); color:var(--ink); font-size:.95rem; font-family:'Inter';
+  }
+  .gate-card .btn{width:100%; text-align:center; border:none; cursor:pointer; margin-top:6px; border-radius:24px;}
+  .gate-progress{font-size:.75rem; font-weight:700; color:var(--red); margin-bottom:14px;}
+  .gate-nav{display:flex; gap:10px; margin-top:4px;}
+  .gate-nav .btn{flex:1; margin-top:0;}
+  .btn-ghost-sm{background:transparent; border:1.5px solid var(--navy) !important; color:var(--navy);}
+  .hp{position:absolute; left:-9999px; top:-9999px;}
+
+  .dest-overlay{position:fixed; inset:0; background:rgba(11,37,69,.72); z-index:60; display:none; align-items:flex-start; justify-content:center; padding:16px; overflow-y:auto;}
+  .dest-overlay.open{display:flex;}
+  .dest-card{background:var(--paper); border-radius:16px; padding:24px 18px; max-width:480px; width:100%; margin-top:40px; position:relative;}
+  .dest-close{position:absolute; top:12px; right:12px; background:none; border:none; font-size:1.3rem; color:var(--ink); cursor:pointer;}
+  .dest-intro{font-size:.9rem; opacity:.8; margin:6px 0 16px;}
+  .dest-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .dest-item{text-align:center;}
+  .dest-photo{width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; margin-bottom:6px; background:var(--line);}
+  .dest-item h3{font-size:.95rem; margin-bottom:4px;}
+  .dest-item p{font-size:.78rem; opacity:.85;}
+  .dest-credit{display:block; font-size:.65rem; opacity:.5; margin-top:2px;}
+
+  .gate-welcome{text-align:center; padding:6px 0 2px;}
+  .gate-welcome-emoji{font-size:2.4rem; margin-bottom:12px;}
+  .gate-welcome h2{margin-bottom:12px; max-width:none;}
+  .gate-welcome-notice{font-size:.85rem; font-style:italic; opacity:.75; max-width:34ch; margin:0 auto 14px; color:var(--red);}
+  .gate-welcome p{font-size:.95rem; opacity:.88; max-width:34ch; margin:0 auto 22px;}
+  .gate-welcome .btn{width:100%;}
+
+  .stars{display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:4px; margin-top:6px;}
+  .stars input{position:absolute; opacity:0; width:0; height:0;}
+  .stars label{font-size:1.8rem; color:var(--line); cursor:pointer; line-height:1;}
+  .stars input:checked ~ label{color:var(--gold);}
+  .stars label:hover, .stars label:hover ~ label{color:var(--gold);}
+  #avis textarea{
+    display:block; width:100%; margin-top:6px; padding:11px 12px; border-radius:8px;
+    border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font-size:.95rem; font-family:'Inter'; resize:vertical;
+  }
+  #avis input[type="text"]{
+    display:block; width:100%; margin-top:6px; padding:11px 12px; border-radius:8px;
+    border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font-size:.95rem; font-family:'Inter';
+  }
+  #avis label{display:block; font-size:.85rem; font-weight:600; margin-bottom:14px;}
+  #avis-merci{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px;}
+
+  .testi-grid{display:grid; grid-template-columns:1fr; gap:14px;}
+  @media(min-width:600px){ .testi-grid{grid-template-columns:1fr 1fr;} }
+  .testi-card{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .testi-stars{color:var(--gold); font-size:1.05rem; letter-spacing:1px; margin-bottom:8px;}
+  .testi-quote{font-size:.92rem; opacity:.85; margin-bottom:10px;}
+  .testi-name{font-size:.85rem; font-weight:700; color:var(--navy);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .testi-name{color:#E9C77A;} }
+  :root[data-theme="dark"] .testi-name{color:#E9C77A;}
+  .testi-empty{opacity:.7; font-size:.95rem; grid-column:1/-1; background:var(--paper); border:1px dashed var(--line); border-radius:12px; padding:20px; text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="gate-overlay" id="gate">
+  <div class="gate-card">
+    <div class="gate-brand">BAMBA-<span>ORIENTATION</span></div>
+
+    <div class="gate-welcome" id="gate-welcome">
+      <div class="gate-welcome-emoji">🎓✨</div>
+      <h2 id="gate-welcome-title">Bienvenue chez BAMBA-ORIENTATION !</h2>
+      <p id="gate-welcome-text">Nous sommes ravis de vous accueillir. Avant de découvrir le site, prenons quelques instants pour faire connaissance : quelques questions rapides vont nous permettre de mieux comprendre votre profil et votre projet d'études, afin de vous proposer un accompagnement vraiment adapté.</p>
+      <p class="gate-welcome-notice">Merci de bien vouloir remplir le formulaire avec des informations exactes : cela nous permet de mieux comprendre votre profil et de vous accompagner efficacement.</p>
+      <button type="button" id="gate-welcome-btn" class="btn btn-primary">Commencer</button>
+    </div>
+
+    <div class="gate-progress" id="gate-progress" hidden>Question 1/6</div>
+    <form id="gate-form" method="POST" hidden>
+      <div class="gate-step">
+        <label>Votre adresse email
+          <input type="email" name="email" required placeholder="exemple@gmail.com">
+        </label>
+      </div>
+      <div class="gate-step" hidden>
+        <label>Votre genre
+          <select name="genre" required>
+            <option value="">Choisir…</option>
+            <option>Homme</option>
+            <option>Femme</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="gate-nav">
+        <button type="button" id="gate-back" class="btn btn-ghost-sm" style="display:none;">Retour</button>
+        <button type="button" id="gate-next" class="btn btn-primary">Suivant</button>
+        <button type="submit" id="gate-submit" class="btn btn-primary" style="display:none;">Entrer sur le site</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="topbar">🎓 Accompagnement 100% personnalisé pour vos études à l'étranger</div>
+<header class="mainbar">
+  <div class="wrap">
+    <div class="brand">BAMBA-<span>ORIENTATION</span></div>
+    <div class="flagbadge" id="ico-flagbadge" role="button" style="cursor:pointer;">🌍 France · Canada · +</div>
+  </div>
+</header>
+<div class="searchbar-wrap">
+  <div class="wrap">
+    <a class="searchbar" href="https://wa.me/221786926592">💬&nbsp; Discuter de votre projet d'études sur WhatsApp</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="dots"></div><div class="tri"></div>
+  <div class="hero-inner">
+    <h1>Étudier &amp; réussir à l'étranger</h1>
+    <p>Un accompagnement complet, de l'orientation jusqu'à votre installation dans le pays de votre choix : France, Canada et plus.</p>
+    <a class="btn btn-primary" href="#demande">Démarrer ma demande</a>
+    <div class="icon-collage">
+      <div class="icon-pod" id="ico-grad" role="button" style="cursor:pointer;">🎓</div>
+      <div class="icon-pod" id="ico-avion" role="button" style="cursor:pointer;">✈️</div>
+      <div class="icon-pod">🛂</div>
+      <div class="icon-pod">🏠</div>
+    </div>
+  </div>
+</div>
+
+<div class="cats">
+  <a class="cat" href="#services"><div class="ico c1">🧭</div><span>Orientation</span></a>
+  <a class="cat" href="#processus"><div class="ico c2">📝</div><span>Préinscription</span></a>
+  <a class="cat" href="#processus"><div class="ico c3">🎤</div><span>Entretiens</span></a>
+  <a class="cat" href="#processus"><div class="ico c4">🏠</div><span>Logement</span></a>
+  <a class="cat" href="#" id="ico-billet"><div class="ico c5">✈️</div><span>Billet</span></a>
+  <a class="cat" href="#processus"><div class="ico c6">🛂</div><span>Visa</span></a>
+</div>
+
+<section id="services">
+  <div class="eyebrow">Pourquoi nous choisir</div>
+  <h2>Ce qui nous distingue</h2>
+  <div class="why-cards">
+    <div class="why-card"><span class="tag">TRANSPARENCE</span><h3>Aucune surprise</h3><p>Coûts, délais et étapes expliqués clairement avant tout paiement.</p></div>
+    <div class="why-card"><span class="tag">SUIVI</span><h3>Un interlocuteur, du début à la fin</h3><p>Le même accompagnement de la consultation jusqu'à votre départ.</p></div>
+    <div class="why-card"><span class="tag">EXPÉRIENCE</span><h3>2 ans sur le terrain à Touba</h3><p>Une équipe basée localement, joignable directement sur WhatsApp.</p></div>
+  </div>
+</section>
+
+<section id="processus">
+  <div class="eyebrow">Comment ça se passe</div>
+  <h2>Notre processus, étape par étape</h2>
+  <ol class="steps">
+    <li><strong>Consultation gratuite</strong><span>Bilan de votre profil et de votre projet d'études.</span></li>
+    <li><strong>Choix des écoles et formations</strong><span>Sélection des établissements adaptés à votre parcours.</span></li>
+    <li><strong>Montage du dossier</strong><span>Préparation et dépôt de la préinscription.</span></li>
+    <li><strong>Préparation à l'entretien</strong><span>Coaching pour maximiser vos chances d'admission.</span></li>
+    <li><strong>Demande de visa</strong><span>Accompagnement pour la constitution du dossier de visa.</span></li>
+    <li><strong>Logement &amp; départ</strong><span>Billet d'avion et logement sécurisés avant votre arrivée.</span></li>
+  </ol>
+</section>
+
+<section id="apropos" class="about">
+  <div class="eyebrow">Qui sommes-nous</div>
+  <h2>Une agence de terrain, basée à Touba</h2>
+  <p>BAMBA-ORIENTATION accompagne depuis deux ans les bacheliers et étudiants sénégalais dans leur projet d'études à l'étranger — France, Canada et d'autres destinations selon le profil et les objectifs de chacun. C'est vous qui choisissez votre destination ; nous vous conseillons pour vous aider à décider. Notre équipe suit chaque dossier personnellement, de la première consultation jusqu'à l'installation sur place, avec une seule priorité : la clarté sur les démarches, les délais et les coûts à chaque étape.</p>
+  <span class="badge">📍 Touba, Darou Minane 2 — Sénégal</span>
+</section>
+
+<section id="temoignages">
+  <div class="eyebrow">Ils nous font confiance</div>
+  <h2>Témoignages</h2>
+  <div class="testi-grid" id="testi-grid">
+    <p class="testi-empty" id="testi-empty">Les premiers témoignages arrivent bientôt — vous serez peut-être parmi les premiers à nous faire confiance !</p>
+  </div>
+
+  <form id="avis-form" method="POST" style="margin-top:22px;">
+    <input type="checkbox" name="botcheck" class="hp" style="display:none;">
+    <label>Votre note
+      <div class="stars">
+        <input type="radio" id="star5" name="note" value="5"><label for="star5">★</label>
+        <input type="radio" id="star4" name="note" value="4"><label for="star4">★</label>
+        <input type="radio" id="star3" name="note" value="3"><label for="star3">★</label>
+        <input type="radio" id="star2" name="note" value="2"><label for="star2">★</label>
+        <input type="radio" id="star1" name="note" value="1"><label for="star1">★</label>
+      </div>
+    </label>
+    <label>Votre nom (optionnel)
+      <input type="text" name="nom_avis">
+    </label>
+    <label>Votre témoignage
+      <textarea name="commentaire" rows="3" required></textarea>
+    </label>
+    <button type="submit" class="btn btn-primary" style="width:auto;">Envoyer mon témoignage</button>
+  </form>
+  <p id="avis-merci" style="display:none;">Merci pour votre témoignage, c'est précieux pour nous ! 🙏</p>
+</section>
+
+<section id="commentaires">
+  <div class="eyebrow">Discussion</div>
+  <h2>Commentaires des visiteurs</h2>
+  <div class="testi-grid" id="comments-list">
+    <p class="testi-empty" id="comments-empty">Aucun commentaire pour le moment. Soyez le premier à en laisser un !</p>
+  </div>
+
+  <form id="comment-form" method="POST" style="margin-top:22px;">
+    <input type="checkbox" name="botcheck" class="hp" style="display:none;">
+    <label>Votre nom (optionnel)
+      <input type="text" name="nom_comment">
+    </label>
+    <label>Votre commentaire
+      <textarea name="message_comment" rows="3" required></textarea>
+    </label>
+    <button type="submit" class="btn btn-primary" style="width:auto;">Publier mon commentaire</button>
+  </form>
+  <p class="gate-welcome-notice" style="max-width:none; text-align:left; margin-top:8px;">Votre commentaire sera visible sur le site après validation par notre équipe.</p>
+  <p id="comment-merci" style="display:none;">Merci ! Votre commentaire est en attente de validation. 🙏</p>
+</section>
+
+<section id="faq">
+  <div class="eyebrow">Questions fréquentes</div>
+  <h2>Ce que nos futurs étudiants demandent</h2>
+  <details><summary>Combien coûte l'accompagnement ?</summary><p>Le coût dépend des services choisis et de votre projet. Contactez-nous sur WhatsApp pour un devis personnalisé et gratuit.</p></details>
+  <details><summary>Combien de temps prend une préinscription ?</summary><p>Les délais varient selon l'établissement et la période de l'année. Nous vous donnons un calendrier précis dès la consultation initiale.</p></details>
+  <details><summary>Que se passe-t-il en cas de refus de visa ?</summary><p>Nous analysons avec vous les motifs du refus et vous accompagnons pour préparer un nouveau dossier ou explorer d'autres options.</p></details>
+  <details><summary>Quelles destinations proposez-vous ?</summary><p>Nous accompagnons vers la France, le Canada, les États-Unis, la Belgique et d'autres destinations. C'est vous qui choisissez le pays qui correspond le mieux à votre projet ; nous vous conseillons pour vous aider à décider.</p></details>
+</section>
+
+<section id="demande">
+  <div class="eyebrow">Faire une demande</div>
+  <h2>Formulaire de demande en ligne</h2>
+  <div id="demande-intro">
+    <p style="opacity:.85; margin-bottom:16px;">Prêt à vous lancer ? Remplissez notre formulaire de demande, notre équipe reviendra vers vous rapidement.</p>
+    <button type="button" id="demande-reveal-btn" class="btn btn-primary" style="width:auto;">Faire ma demande</button>
+  </div>
+  <form id="demande-form" method="POST" hidden>
+    <input type="hidden" name="access_key" value="9a979d7d-1bf5-421c-8153-634ef996876a">
+    <input type="hidden" name="subject" value="Nouvelle demande en ligne — BAMBA-ORIENTATION">
+    <input type="hidden" name="from_name" value="BAMBA-ORIENTATION — Demande">
+    <input type="checkbox" name="botcheck" class="hp" style="display:none;">
+    <label>Votre prénom
+      <input type="text" name="prenom" required>
+    </label>
+    <label>Votre nom
+      <input type="text" name="nom" required>
+    </label>
+    <label>Votre numéro de mobile
+      <input type="tel" name="mobile" required placeholder="ex : 77 123 45 67">
+    </label>
+    <label>Votre adresse
+      <input type="text" name="adresse" required>
+    </label>
+    <label>Votre ville
+      <input type="text" name="ville" required>
+    </label>
+    <label>Votre nationalité
+      <input type="text" name="nationalite" required>
+    </label>
+    <label>Votre série / filière en cours
+      <input type="text" name="serie_filiere" required placeholder="ex : S2, ou Licence Gestion">
+    </label>
+    <label>Votre niveau d'étude
+      <select name="niveau_etude" required>
+        <option value="">Choisir…</option>
+        <option>Terminale / Bachelier</option>
+        <option>Licence 1</option>
+        <option>Licence 2</option>
+        <option>Licence 3</option>
+        <option>Master</option>
+        <option>Autre</option>
+      </select>
+    </label>
+    <label>Votre moyenne (à confirmer avec vos bulletins/diplômes)
+      <input type="number" name="moyenne" min="0" max="20" step="0.01" placeholder="ex : 12.5" required>
+    </label>
+    <label>Choisir votre destination
+      <select name="destination" required>
+        <option value="">Choisir…</option>
+        <option>France</option>
+        <option>Canada</option>
+        <option>États-Unis</option>
+        <option>Belgique</option>
+        <option>Pas encore décidé</option>
+      </select>
+    </label>
+    <label>Votre message
+      <textarea name="message" rows="4" required></textarea>
+    </label>
+    <button type="submit" class="btn btn-primary" style="width:auto;">Envoyer ma demande</button>
+  </form>
+  <p id="demande-merci" style="display:none;">Merci pour votre demande ! Notre équipe vous contactera très bientôt. 🎓</p>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="eyebrow">Nous contacter</div>
+  <h2>Parlons de votre projet d'études</h2>
+  <div class="contact-grid">
+    <div class="contact-card"><h3>WhatsApp / Téléphone</h3>
+      <a href="https://wa.me/221786926592">+221 78 692 65 92</a><br>
+      <a href="https://wa.me/221768026652">+221 76 802 66 52</a>
+    </div>
+    <div class="contact-card"><h3>Adresse</h3>Touba, Darou Minane 2 — Sénégal</div>
+  </div>
+</section>
+
+<div class="dest-overlay" id="dest-modal">
+  <div class="dest-card">
+    <button type="button" class="dest-close" id="dest-close">✕</button>
+    <h2>Nos destinations</h2>
+    <p class="dest-intro">Un monument emblématique de chaque pays.</p>
+    <div class="dest-grid">
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sous_la_Tour_Eiffel_1.jpg?width=400" alt="Tour Eiffel, Paris">
+        <h3>🇫🇷 France</h3>
+        <p>La Tour Eiffel, Paris.</p>
+        <span class="dest-credit">Photo : Jebulon / Wikimedia Commons</span>
+      </div>
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/CN_Tower,_Toronto,_Canada_(Unsplash_DJ_kOgH5u0o).jpg?width=400" alt="Tour CN, Toronto">
+        <h3>🇨🇦 Canada</h3>
+        <p>La Tour CN, Toronto.</p>
+        <span class="dest-credit">Photo : Scott Webb / Wikimedia Commons</span>
+      </div>
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Statue_of_Liberty_National_Monument_STLI2261.jpg?width=400" alt="Statue de la Liberté, New York">
+        <h3>🇺🇸 États-Unis</h3>
+        <p>La Statue de la Liberté, New York.</p>
+        <span class="dest-credit">Photo : National Park Service</span>
+      </div>
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Atomium's_NW_sphere_(DSCF1210).jpg?width=400" alt="Atomium, Bruxelles">
+        <h3>🇧🇪 Belgique</h3>
+        <p>L'Atomium, Bruxelles.</p>
+        <span class="dest-credit">Photo : Trougnouf / Wikimedia Commons</span>
+      </div>
+    </div>
+    <a class="btn btn-primary" href="#demande" id="dest-cta" style="width:100%; margin-top:16px;">Faire ma demande pour l'une de ces destinations</a>
+  </div>
+</div>
+
+<div class="dest-overlay" id="uni-modal">
+  <div class="dest-card">
+    <button type="button" class="dest-close" id="uni-close">✕</button>
+    <h2>Universités reconnues</h2>
+    <p class="dest-intro">Un exemple d'université prestigieuse par pays.</p>
+    <div class="dest-grid">
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fa%C3%A7ade_chapelle_Sorbonne_Paris.jpg?width=400" alt="La Sorbonne, Paris">
+        <h3>🇫🇷 France</h3>
+        <p>La Sorbonne, Paris.</p>
+        <span class="dest-credit">Photo : Jebulon / Wikimedia Commons</span>
+      </div>
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/McgillMCTAVISHbroulliard.jpg?width=400" alt="Université McGill, Montréal">
+        <h3>🇨🇦 Canada</h3>
+        <p>Université McGill, Montréal.</p>
+        <span class="dest-credit">Photo : Wikimedia Commons</span>
+      </div>
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Lowell_House_(Harvard_University).jpg?width=400" alt="Université Harvard">
+        <h3>🇺🇸 États-Unis</h3>
+        <p>Université Harvard.</p>
+        <span class="dest-credit">Photo : Carrie / Wikimedia Commons</span>
+      </div>
+      <div class="dest-item">
+        <img class="dest-photo" loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Castle_Arenberg,_Katholieke_Universiteit_Leuven_adj.jpg?width=400" alt="KU Leuven, Belgique">
+        <h3>🇧🇪 Belgique</h3>
+        <p>KU Leuven (château d'Arenberg).</p>
+        <span class="dest-credit">Photo : Wikimedia Commons</span>
+      </div>
+    </div>
+    <a class="btn btn-primary" href="#demande" id="uni-cta" style="width:100%; margin-top:16px;">Faire ma demande pour l'une de ces destinations</a>
+  </div>
+</div>
+
+<footer>BAMBA-ORIENTATION — Études, avenir, réussite. © 2026</footer>
+
+<nav class="botnav">
+  <a href="#" class="active"><span class="bi">🏠</span>Accueil</a>
+  <a href="#services"><span class="bi">🧭</span>Services</a>
+  <a href="#demande"><span class="bi">📝</span>Demande</a>
+  <a href="https://wa.me/221786926592"><span class="bi">💬</span>Contact</a>
+</nav>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyBRHw1OHCjuCfNCmBze1ZUo9v3VPcUKOuA",
+    authDomain: "bamba-orientation.firebaseapp.com",
+    projectId: "bamba-orientation",
+    storageBucket: "bamba-orientation.firebasestorage.app",
+    messagingSenderId: "6927549442",
+    appId: "1:6927549442:web:f483367be5a950b327131b"
+  });
+  var db = firebase.firestore();
+</script>
+<script>
+(function(){
+  var KEY = 'bo_identified_v5';
+  var gate = document.getElementById('gate');
+  var body = document.body;
+  var already = false;
+  try{ already = localStorage.getItem(KEY) === '1'; }catch(e){}
+  if(already){ gate.style.display = 'none'; }
+  else{ body.style.overflow = 'hidden'; }
+
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.gate-step'));
+  var idx = 0;
+  var progress = document.getElementById('gate-progress');
+  var backBtn = document.getElementById('gate-back');
+  var nextBtn = document.getElementById('gate-next');
+  var submitBtn = document.getElementById('gate-submit');
+  var welcome = document.getElementById('gate-welcome');
+  var welcomeBtn = document.getElementById('gate-welcome-btn');
+  var form = document.getElementById('gate-form');
+
+  function render(){
+    steps.forEach(function(s,i){ s.hidden = i !== idx; });
+    progress.textContent = 'Question ' + (idx+1) + '/' + steps.length;
+    backBtn.style.display = idx === 0 ? 'none' : '';
+    var last = idx === steps.length - 1;
+    nextBtn.style.display = last ? 'none' : '';
+    submitBtn.style.display = last ? '' : 'none';
+  }
+  render();
+
+  welcomeBtn.addEventListener('click', function(){
+    welcome.hidden = true;
+    progress.hidden = false;
+    form.hidden = false;
+  });
+
+  function currentField(){ return steps[idx].querySelector('input,select'); }
+
+  nextBtn.addEventListener('click', function(){
+    var f = currentField();
+    if(!f.checkValidity()){ f.reportValidity(); return; }
+    if(idx < steps.length - 1){ idx++; render(); }
+  });
+  backBtn.addEventListener('click', function(){ if(idx > 0){ idx--; render(); } });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = currentField();
+    if(!f.checkValidity()){ f.reportValidity(); return; }
+    try{ localStorage.setItem(KEY,'1'); }catch(e){}
+    gate.style.display = 'none';
+    body.style.overflow = '';
+  });
+
+  var avisForm = document.getElementById('avis-form');
+  var avisMerci = document.getElementById('avis-merci');
+  avisForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = avisForm.querySelector('button[type="submit"]');
+    var noteInput = avisForm.querySelector('input[name="note"]:checked');
+    if(!noteInput){ alert('Merci de choisir une note en étoiles.'); return; }
+    btn.disabled = true;
+    db.collection('testimonials').add({
+      note: parseInt(noteInput.value, 10),
+      nom: (avisForm.nom_avis.value || 'Visiteur').trim(),
+      message: avisForm.commentaire.value.trim(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+      avisForm.hidden = true;
+      avisMerci.style.display = 'block';
+      loadTestimonials();
+    }).catch(function(){
+      btn.disabled = false;
+      alert('Connexion impossible. Vérifiez votre connexion internet et réessayez.');
+    });
+  });
+
+  function starString(n){
+    var s = ''; for(var i=0;i<5;i++){ s += (i<n ? '★' : '☆'); } return s;
+  }
+
+  function loadTestimonials(){
+    var grid = document.getElementById('testi-grid');
+    var empty = document.getElementById('testi-empty');
+    db.collection('testimonials').orderBy('createdAt','desc').limit(20).get().then(function(snap){
+      if(snap.empty) return;
+      if(empty) empty.remove();
+      grid.innerHTML = '';
+      snap.forEach(function(doc){
+        var d = doc.data();
+        var card = document.createElement('div');
+        card.className = 'testi-card';
+        card.innerHTML = '<div class="testi-stars">'+starString(d.note||5)+'</div>'+
+          '<p class="testi-quote">"'+(d.message||'').replace(/</g,'&lt;')+'"</p>'+
+          '<div class="testi-name">'+(d.nom||'Visiteur').replace(/</g,'&lt;')+'</div>';
+        grid.appendChild(card);
+      });
+    }).catch(function(){});
+  }
+  loadTestimonials();
+
+  var commentForm = document.getElementById('comment-form');
+  var commentMerci = document.getElementById('comment-merci');
+  commentForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = commentForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    db.collection('comments').add({
+      nom: (commentForm.nom_comment.value || 'Visiteur').trim(),
+      message: commentForm.message_comment.value.trim(),
+      approved: false,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+      commentForm.hidden = true;
+      commentMerci.style.display = 'block';
+      fetch('https://api.web3forms.com/submit', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({
+          access_key: '9a979d7d-1bf5-421c-8153-634ef996876a',
+          subject: 'Nouveau commentaire à valider — BAMBA-ORIENTATION',
+          from_name: 'BAMBA-ORIENTATION — Commentaire',
+          nom: commentForm.nom_comment.value,
+          message: commentForm.message_comment.value
+        })
+      }).catch(function(){});
+    }).catch(function(){
+      btn.disabled = false;
+      alert('Connexion impossible. Vérifiez votre connexion internet et réessayez.');
+    });
+  });
+
+  function loadComments(){
+    var list = document.getElementById('comments-list');
+    var empty = document.getElementById('comments-empty');
+    db.collection('comments').where('approved','==',true).get().then(function(snap){
+      if(snap.empty) return;
+      var docs = [];
+      snap.forEach(function(doc){ docs.push(doc.data()); });
+      docs.sort(function(a,b){
+        var ta = a.createdAt ? a.createdAt.toMillis() : 0;
+        var tb = b.createdAt ? b.createdAt.toMillis() : 0;
+        return tb - ta;
+      });
+      if(empty) empty.remove();
+      list.innerHTML = '';
+      docs.forEach(function(d){
+        var card = document.createElement('div');
+        card.className = 'testi-card';
+        card.innerHTML = '<p class="testi-quote">"'+(d.message||'').replace(/</g,'&lt;')+'"</p>'+
+          '<div class="testi-name">'+(d.nom||'Visiteur').replace(/</g,'&lt;')+'</div>';
+        list.appendChild(card);
+      });
+    }).catch(function(){});
+  }
+  loadComments();
+
+  var demandeForm = document.getElementById('demande-form');
+  var demandeMerci = document.getElementById('demande-merci');
+  demandeForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = demandeForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    var data = Object.fromEntries(new FormData(demandeForm));
+    db.collection('requests').add(Object.assign({}, data, {
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    })).then(function(){
+      return fetch('https://api.web3forms.com/submit', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(data)
+      });
+    }).then(function(){
+      demandeForm.hidden = true;
+      demandeMerci.style.display = 'block';
+    }).catch(function(){
+      btn.disabled = false;
+      alert('Connexion impossible. Vérifiez votre connexion internet et réessayez.');
+    });
+  });
+
+  var destModal = document.getElementById('dest-modal');
+  function openDest(e){ if(e) e.preventDefault(); destModal.classList.add('open'); }
+  function closeDest(){ destModal.classList.remove('open'); }
+  document.getElementById('ico-avion').addEventListener('click', openDest);
+  document.getElementById('ico-billet').addEventListener('click', openDest);
+  document.getElementById('ico-flagbadge').addEventListener('click', openDest);
+  document.getElementById('dest-close').addEventListener('click', closeDest);
+  destModal.addEventListener('click', function(e){ if(e.target === destModal) closeDest(); });
+
+  var uniModal = document.getElementById('uni-modal');
+  function openUni(e){ if(e) e.preventDefault(); uniModal.classList.add('open'); }
+  function closeUni(){ uniModal.classList.remove('open'); }
+  document.getElementById('ico-grad').addEventListener('click', openUni);
+  document.getElementById('uni-close').addEventListener('click', closeUni);
+  uniModal.addEventListener('click', function(e){ if(e.target === uniModal) closeUni(); });
+  var demandeIntro = document.getElementById('demande-intro');
+  function showDemandeForm(){
+    demandeIntro.style.display = 'none';
+    demandeForm.hidden = false;
+  }
+  document.getElementById('demande-reveal-btn').addEventListener('click', showDemandeForm);
+  document.getElementById('dest-cta').addEventListener('click', function(){ closeDest(); showDemandeForm(); });
+  document.getElementById('uni-cta').addEventListener('click', function(){ closeUni(); showDemandeForm(); });
+})();
+</script>
+</body>
+</html>
